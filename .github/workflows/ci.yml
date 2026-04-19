@@ -35,13 +35,7 @@ jobs:
 
       - name: flake8
         run: |
-          # Erreurs bloquantes : syntaxe, imports non définis, noms non définis
-          # E9   → erreurs d'exécution (ex: SyntaxError)
-          # F63x → mauvaise utilisation de assert ou print en Python 2 style
-          # F7   → erreurs de syntaxe détectées par pyflakes
-          # F82  → variables non définies (undefined name)
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # Vérification qualité globale (non bloquante)
           flake8 . --count --exit-zero --statistics
 
       - name: pytest
