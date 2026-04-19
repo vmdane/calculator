@@ -10,18 +10,86 @@
 
 
 1.  Public GitHub repository URL : https://github.com/vmdane/calculator/
-2.  Screenshot of CI pipeline passing in GitHub Actions
+2.  ### ci.yml
+
+```yaml
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v5
+
+      - name: Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+
+      - name: flake8
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --statistics
+
+      - name: pytest
+        run: |
+          pytest tests/
+
+  trivy-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v5
+
+      - name: trivy FS mode
+        uses: aquasecurity/trivy-action@v0.35.0
+        with:
+          scan-type: fs
+          format: sarif
+          output: results.sarif
+          severity: CRITICAL,HIGH
+
+      - name: upload
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: results.sarif
+```
+
+3.  Screenshot of CI pipeline passing in GitHub Actions
    <img alt="image" src="https://github.com/user-attachments/assets/87def262-6f2f-4616-aeb8-23df1dc774d0" />
 
-3.  Screenshot of CD pipeline passing
+4.  Screenshot of CD pipeline passing
 <img alt="image" src="https://github.com/user-attachments/assets/c4e568fa-be3d-4f04-bdb4-674000f04006" />
 
   
-4.  Screenshot of your Docker Hub repository showing the image
+5.  Screenshot of your Docker Hub repository showing the image
 <img width="1148" height="578" alt="image" src="https://github.com/user-attachments/assets/13610af8-9d08-42dc-92d7-600fb2b0fd22" />
 
   
-5.  All the files you created (in blocks of code)
+6.  All the files you created (in blocks of code)
 
 CD/
 ```
