@@ -10,7 +10,20 @@
 
 
 1.  Public GitHub repository URL : https://github.com/vmdane/calculator/
-2.  ### ci.yml
+
+3.  Screenshot of CI pipeline passing in GitHub Actions
+   <img alt="image" src="https://github.com/user-attachments/assets/87def262-6f2f-4616-aeb8-23df1dc774d0" />
+
+4.  Screenshot of CD pipeline passing
+<img alt="image" src="https://github.com/user-attachments/assets/c4e568fa-be3d-4f04-bdb4-674000f04006" />
+
+  
+5.  Screenshot of your Docker Hub repository showing the image
+<img width="1148" height="578" alt="image" src="https://github.com/user-attachments/assets/13610af8-9d08-42dc-92d7-600fb2b0fd22" />
+
+  
+6.  All the files you created (in blocks of code)
+   ### ci.yml
 
 ```yaml
 name: CI
@@ -78,18 +91,6 @@ jobs:
           sarif_file: results.sarif
 ```
 
-3.  Screenshot of CI pipeline passing in GitHub Actions
-   <img alt="image" src="https://github.com/user-attachments/assets/87def262-6f2f-4616-aeb8-23df1dc774d0" />
-
-4.  Screenshot of CD pipeline passing
-<img alt="image" src="https://github.com/user-attachments/assets/c4e568fa-be3d-4f04-bdb4-674000f04006" />
-
-  
-5.  Screenshot of your Docker Hub repository showing the image
-<img width="1148" height="578" alt="image" src="https://github.com/user-attachments/assets/13610af8-9d08-42dc-92d7-600fb2b0fd22" />
-
-  
-6.  All the files you created (in blocks of code)
 
 CD/
 ```
