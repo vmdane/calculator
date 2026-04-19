@@ -1,6 +1,66 @@
-# TP Sécurité Web — hallenges
+# TP Sécurité Web 
 
 **Membres du groupe :** GUEPPOIS Karen· MOUKOKO NDONGO Victoire Dane
+
+---
+
+## Partie 1 — CI/CD
+
+---
+
+
+1.  Public GitHub repository URL : https://github.com/vmdane/calculator/
+2.  Screenshot of CI pipeline passing in GitHub Actions
+   <img alt="image" src="https://github.com/user-attachments/assets/87def262-6f2f-4616-aeb8-23df1dc774d0" />
+
+3.  Screenshot of CD pipeline passing
+<img alt="image" src="https://github.com/user-attachments/assets/c4e568fa-be3d-4f04-bdb4-674000f04006" />
+
+  
+4.  Screenshot of your Docker Hub repository showing the image
+<img width="1148" height="578" alt="image" src="https://github.com/user-attachments/assets/13610af8-9d08-42dc-92d7-600fb2b0fd22" />
+
+  
+5.  All the files you created (in blocks of code)
+
+CD/
+```
+
+name: CD
+
+on:
+  workflow_run:
+    workflows: ["CI"] 
+    types:
+      - completed
+    branches:
+      - main
+
+jobs:
+  build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v5
+
+      - name: login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: build and push
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/calculator:latest
+
+```
+
+
 
 ---
 
